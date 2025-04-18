@@ -34,7 +34,7 @@ const MorseConverter: React.FC = () => {
         }, 3000);
     };
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text: string) => {
     try {
         navigator.clipboard.writeText(text);
         showToast("Text copied to clipboard!");
