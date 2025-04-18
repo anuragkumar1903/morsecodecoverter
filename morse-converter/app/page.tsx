@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { textToMorse, morseToText } from "./utils/morseConverter";
 
@@ -6,9 +6,9 @@ const MorseConverter: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [text, setText] = useState("");
     const [morse, setMorse] = useState("");
-    const [convertedText, setConvertedText] = useState("");
-    const [convertedMorse, setConvertedMorse] = useState("");
-  const [textError, setTextError] = useState(null);
+  const [convertedText, setConvertedText] = useState("");
+  const [convertedMorse, setConvertedMorse] = useState("");
+  const [textError, setTextError] = useState<string | null>(null);
   const [morseError, setMorseError] = useState(null);
 
   const toggleDarkMode = useCallback(() => {
@@ -34,13 +34,13 @@ const MorseConverter: React.FC = () => {
         }, 3000);
     };
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string): void => {
     try {
-        navigator.clipboard.writeText(text);
-        showToast("Text copied to clipboard!");
-
+      navigator.clipboard.writeText(text);
+      showToast("Text copied to clipboard!");
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
+
     }
   };
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -54,17 +54,17 @@ const MorseConverter: React.FC = () => {
         setConvertedMorse(result);
     } catch (error: any) {
         setTextError(error.message);
-        setConvertedMorse("");
+      setConvertedMorse("");
     }
   };
 
   const handleConvertMorse = (): void => {
     setMorseError(null);
     try {
-      const result = morseToText(morse);
-      setConvertedText(result);
+        const result = morseToText(morse);
+        setConvertedText(result);
     } catch (error: any) {
-      setMorseError(error.message);
+        setMorseError(error.message);
       setConvertedText("");
     }
   };
@@ -74,14 +74,14 @@ const MorseConverter: React.FC = () => {
 };
    useEffect(() => {
     document.documentElement.classList.remove("dark");
-   }, []);
-  
+   }, [])
+
   return (
         <>
         <div className="min-h-screen bg-white dark:bg-gray-800 flex flex-col items-center justify-center p-4">
             <button
                 className="absolute top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-md shadow-md text-black dark:text-white"
-                onClick={toggleDarkMode}
+                onClick={toggleDarkMode}           
             >
                 {isDarkMode ? "Light Mode" : "Dark Mode"}
             </button>
@@ -94,7 +94,7 @@ const MorseConverter: React.FC = () => {
                     <textarea
                         className="w-full h-32 p-2 border border-gray-300 rounded-md mb-2 resize-none text-black dark:text-white"
                         placeholder="Enter text here"
-                         value={text}
+                         value={text}                         
                         onChange={handleTextChange}
                     />
                      {textError && <div className="text-red-500 mb-2">{textError}</div>}
@@ -124,7 +124,7 @@ const MorseConverter: React.FC = () => {
                         </button>
                     </div>
                    
-                </div>
+        </div>
                 <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg p-6">
 
                     <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Morse to Text</h2>
@@ -136,6 +136,7 @@ const MorseConverter: React.FC = () => {
                     />
                     {morseError && <div className="text-red-500 mb-2">{morseError}</div>}
                     <button
+
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 ${morse.trim() === "" ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                         onClick={handleConvertMorse}
@@ -145,7 +146,7 @@ const MorseConverter: React.FC = () => {
                     </button>
                      <div className="flex items-center">
                          <textarea
-                                className="w-full h-32 p-2 border border-gray-300 rounded-md resize-none bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
+                            className="w-full h-32 p-2 border border-gray-300 rounded-md resize-none bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
                                 value={convertedText}
                                 readOnly
                             />
@@ -162,7 +163,7 @@ const MorseConverter: React.FC = () => {
             </div>
         </div></>
       
-    );
-};
+  );
+}
 
 export default MorseConverter;
